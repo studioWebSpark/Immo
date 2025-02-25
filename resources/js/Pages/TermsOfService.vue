@@ -1,14 +1,22 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
+import SeoHead from '@/Components/SeoHead.vue';
+import { computed } from 'vue';
 
 defineProps({
     terms: String,
 });
+
+const baseUrl = computed(() => window.location.origin);
 </script>
 
 <template>
+
     <Head title="Terms of Service" />
+    <SeoHead title="Conditions d'utilisation"
+        description="Consultez nos conditions générales d'utilisation. Informations sur les règles et modalités d'utilisation des services de ConseillerImmo."
+        :url="`${baseUrl}/terms-of-service`" robots="noindex, follow" />
 
     <div class="font-sans text-gray-900 dark:text-gray-100 antialiased">
         <div class="pt-4 bg-gray-100 dark:bg-gray-900">
@@ -17,7 +25,8 @@ defineProps({
                     <AuthenticationCardLogo />
                 </div>
 
-                <div class="w-full sm:max-w-2xl mt-6 p-6 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg prose dark:prose-invert" v-html="terms" />
+                <div class="w-full sm:max-w-2xl mt-6 p-6 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg prose dark:prose-invert"
+                    v-html="terms" />
             </div>
         </div>
     </div>

@@ -1,13 +1,16 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
+import { Head } from '@inertiajs/vue3';
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 import CreateTeamForm from '@/Pages/Teams/Partials/CreateTeamForm.vue';
 </script>
 
 <template>
-    <AppLayout title="Create Team">
+    <Head title="Créer une équipe" />
+
+    <DashboardLayout title="Créer une équipe">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Create Team
+                Créer une équipe
             </h2>
         </template>
 
@@ -16,5 +19,5 @@ import CreateTeamForm from '@/Pages/Teams/Partials/CreateTeamForm.vue';
                 <CreateTeamForm />
             </div>
         </div>
-    </AppLayout>
+    </DashboardLayout>
 </template>
