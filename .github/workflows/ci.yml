@@ -1,58 +1,59 @@
 name: CI Laravel Vue.js ConseillerImmo
 
 on:
-push:
-branches:
-- version-1
-pull_request:
-branches:
-- version-1
+  push:
+    branches:
+      - version-1
+  pull_request:
+    branches:
+      - version-1
 
 jobs:
-build:
-runs-on: ubuntu-latest
-steps:
-- name: Checkout code
-  uses: actions/checkout@v3
+  build:
+    runs-on: ubuntu-latest
 
-- name: Cache Composer dependencies
-  uses: actions/cache@v3
-  with:
-    path: vendor
-    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-    restore-keys: |
-      ${{ runner.os }}-composer-
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-- name: Setup PHP
-  uses: shivammathur/setup-php@v2
-  with:
-    php-version: '8.3'
-    extensions: mbstring, pdo, pdo_mysql, bcmath, json, curl
+    - name: Cache Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
 
-- name: Install Composer dependencies
-  run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: mbstring, pdo, pdo_mysql, bcmath, json, curl
 
-- name: Cache Node.js dependencies
-  uses: actions/cache@v3
-  with:
-    path: node_modules
-    key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-    restore-keys: |
-      ${{ runner.os }}-node-
+    - name: Install Composer dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
-- name: Setup Node.js
-  uses: actions/setup-node@v3
-  with:
-    node-version: 'latest'
+    - name: Cache Node.js dependencies
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
 
-- name: Install Node.js dependencies
-  run: npm install
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 'latest'
 
-- name: Build assets
-  run: npm run build
+    - name: Install Node.js dependencies
+      run: npm install
 
-- name: Set up .env file
-  run: cp .env.example .env
+    - name: Build assets
+      run: npm run build
 
-- name: Generate Laravel app key
-  run: php artisan key:generate
+    - name: Set up .env file
+      run: cp .env.example .env
+
+    - name: Generate Laravel app key
+      run: php artisan key:generate
